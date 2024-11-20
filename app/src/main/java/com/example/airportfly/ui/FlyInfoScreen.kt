@@ -82,7 +82,8 @@ fun FlyInfoScreen() {
                     modifier = Modifier.fillMaxSize(),
                     contentAlignment = Alignment.Center
                 ) {
-                    Text(text = FlyInfoTabItems.entries[selectedTabIndex.value].text)
+                    //Text(text = FlyInfoTabItems.entries[selectedTabIndex.value].text)
+                    FlyInfoInScreen()
                 }
             }
         }
