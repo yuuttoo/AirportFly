@@ -97,6 +97,7 @@ dependencies {
     ksp(libs.com.squareup.moshi.kotlin.codegen)
     implementation(libs.kotlinx.coroutines)
     implementation(libs.lifecycle.viewmodel.compose)
+    implementation(libs.androidx.navigation.compose)
 
 
 

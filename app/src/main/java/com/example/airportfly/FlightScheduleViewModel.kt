@@ -7,6 +7,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.airportfly.network.CurrencyRepository
 import com.example.airportfly.network.currencyService
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class FlightScheduleViewModel(): ViewModel() {
@@ -19,13 +21,16 @@ class FlightScheduleViewModel(): ViewModel() {
     private val _error = MutableLiveData<String>()
     val error: LiveData<String> = _error
 
+    private var updateJob: Job? = null
+
 //    init {
 //        fetchFlightSchedules(1, 1)
 //    }
 
 
     fun fetchFlightSchedules(airFlyLine: Int, airFlyIO: Int) {
-            viewModelScope.launch {
+            updateJob?.cancel()//make sure only one Job working
+            updateJob = viewModelScope.launch {
                 flyRepository.fetchAirFlyData(airFlyLine, airFlyIO)
                     .collect { result ->
                         result.onSuccess { data ->
@@ -36,6 +41,16 @@ class FlightScheduleViewModel(): ViewModel() {
                     }
             }
         }
+
+    fun stopFetchingSchedules() {
+        updateJob?.cancel()
+        updateJob = null
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        stopFetchingSchedules()
+    }
 
     fun getRates() {
         viewModelScope.launch {
