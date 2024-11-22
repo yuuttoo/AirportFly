@@ -5,7 +5,6 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
@@ -20,7 +19,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
@@ -28,9 +26,8 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.airportfly.ui.Composable.BottomNavigationItems
 import com.example.airportfly.ui.NavigationGraph
+import com.example.airportfly.ui.Screen.FlightScheduleViewModel
 import com.example.airportfly.ui.theme.AirportFlyTheme
-import retrofit2.Retrofit
-import retrofit2.converter.moshi.MoshiConverterFactory
 
 class MainActivity : ComponentActivity() {
     val vm = FlightScheduleViewModel()
@@ -53,23 +50,13 @@ class MainActivity : ComponentActivity() {
                     ) {
                         NavigationGraph(
                             navController = navController,
-                            startDestination = BottomNavigationItems.FlyInfoScreen.route
+                            startDestination = BottomNavigationItems.FlyInfoScreen.route,
+                            viewModel = FlightScheduleViewModel()
                         )
                     }
                 }
             }
         }
-    }
-
-    override fun onStart() {
-        super.onStart()
-        vm.fetchFlightSchedules(1, 1)
-        //vm.getRates()//匯率資料
-    }
-
-    override fun onStop() {
-        super.onStop()
-        vm.stopFetchingSchedules()
     }
 }
 
@@ -119,18 +106,11 @@ fun BottomBar(
         }
     }
 }
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
+
 
 @Preview(showBackground = true)
 @Composable
 fun GreetingPreview() {
     AirportFlyTheme {
-        Greeting("Android")
     }
 }

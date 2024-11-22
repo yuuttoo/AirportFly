@@ -22,7 +22,7 @@ class AirportFlyRepository(private val apiService: ApiService) {
             } catch (e: Exception) {
                 emit(Result.failure(e))
             }
-            delay(Utility.REFRESH_INTERVAL)
+            //delay(Utility.REFRESH_INTERVAL)
         }
     }
 }
