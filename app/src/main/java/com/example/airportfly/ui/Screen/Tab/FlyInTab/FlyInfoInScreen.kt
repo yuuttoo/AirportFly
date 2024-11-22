@@ -38,22 +38,21 @@ import kotlinx.coroutines.delay
 @Composable
 fun FlyInfoInScreen(
     viewModel: FlightScheduleViewModel,
-    isVisible: Boolean
 ) {
     val flyInState by viewModel.flyInScheduleState.collectAsState()
 
-    LaunchedEffect(isVisible) {
-        if(isVisible) {
-            viewModel.fetchInboundFlights()
-
-            while(true) {
-                delay(Utility.REFRESH_INTERVAL)
-                if(isVisible) {
-                    viewModel.fetchInboundFlights()
-                }
-            }
-        }
-    }
+//    LaunchedEffect(isVisible) {
+//        if(isVisible) {
+//            viewModel.fetchInboundFlights()
+//
+//            while(true) {
+//                delay(Utility.REFRESH_INTERVAL)
+//                if(isVisible) {
+//                    viewModel.fetchInboundFlights()
+//                }
+//            }
+//        }
+//    }
 
     when (val state = flyInState) {
         is FlightScheduleUiState.Loading -> {

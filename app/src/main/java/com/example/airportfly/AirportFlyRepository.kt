@@ -9,7 +9,7 @@ import retrofit2.Response
 class AirportFlyRepository(private val apiService: ApiService) {
     suspend fun  fetchAirFlyData(airFlyLine: Int, airFlyIO: Int)
     : Flow<Result<FlightScheduleResponse>> = flow {
-        while (true) {
+        //while (true) {
             try {
                 val response = apiService.fetchInstantSchedule(airFlyLine, airFlyIO)
                 if (response.isSuccessful) {
@@ -23,6 +23,6 @@ class AirportFlyRepository(private val apiService: ApiService) {
                 emit(Result.failure(e))
             }
             //delay(Utility.REFRESH_INTERVAL)
-        }
+        //}
     }
 }

@@ -16,6 +16,7 @@ import com.example.airportfly.network.CurrencyRepository
 import com.example.airportfly.network.currencyService
 import com.example.airportfly.ui.Screen.Tab.FlightScheduleUiState
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -31,13 +32,31 @@ class FlightScheduleViewModel: ViewModel() {
     private val _flyOutScheduleState = MutableStateFlow<FlightScheduleUiState>(FlightScheduleUiState.Loading)
     val flyOutScheduleState: StateFlow<FlightScheduleUiState> = _flyOutScheduleState.asStateFlow()
 
-    private var inboundJob: Job? = null
-    private var outboundJob: Job? = null
+
+    private var pollingJob: Job? = null
+
+    fun startPolling(isInbound: Boolean) {
+        stopPolling()//make sure only 1 job working
+
+        pollingJob = viewModelScope.launch {
+            while(true) {
+                if(isInbound) {
+                    fetchInboundFlights()
+                } else {
+                    fetchOutboundFlights()
+                }
+                delay(Utility.REFRESH_INTERVAL)
+            }
+        }
+    }
+
+    fun stopPolling() {
+        pollingJob?.cancel()
+        pollingJob = null
+    }
 
 
-    fun fetchOutboundFlights() {
-        outboundJob?.cancel()
-        outboundJob = viewModelScope.launch {
+    suspend fun fetchOutboundFlights() {
             _flyInScheduleState.value = FlightScheduleUiState.Loading
             try {
                 flyRepository.fetchAirFlyData(airFlyLine = 1, airFlyIO = 1)
@@ -70,13 +89,9 @@ class FlightScheduleViewModel: ViewModel() {
                     e.message ?: "網路連線錯誤"
                 )
             }
-
-        }
     }
 
-    fun fetchInboundFlights() {
-        inboundJob?.cancel()//make sure only one Job working
-        inboundJob = viewModelScope.launch {
+    suspend fun fetchInboundFlights() {
             _flyInScheduleState.value = FlightScheduleUiState.Loading
             try {
                 flyRepository.fetchAirFlyData(airFlyLine = 1, airFlyIO = 2)
@@ -109,25 +124,24 @@ class FlightScheduleViewModel: ViewModel() {
                     e.message ?: "網路連線錯誤"
                 )
             }
-
-        }
     }
 
 
     private fun mapToFlightStatus(airFlyStatus: String): FlightStatus {
         return when (airFlyStatus) {
-            "DEPARTED" -> FlightStatus.DEPARTED
+            "離站Departed" -> FlightStatus.DEPARTED
+            "準時On Time" -> FlightStatus.ON_TIME
+            "抵達Arrived" -> FlightStatus.ARRIVED
+            "延遲Delayed" -> FlightStatus.DELAYED
+            "取消Cancelled" -> FlightStatus.CANCELED
             "SCHEDULE_CHANGE" -> FlightStatus.SCHEDULE_CHANGE
-            "CANCELED" -> FlightStatus.CANCELED
             else -> FlightStatus.SCHEDULE_CHANGE // 預設值
         }
     }
 
-
     override fun onCleared() {
         super.onCleared()
-        inboundJob?.cancel()
-        outboundJob?.cancel()
+        stopPolling()
     }
 
     fun getRates() {

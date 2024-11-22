@@ -17,17 +17,32 @@ fun StatusChip(status: FlightStatus) {
         FlightStatus.DEPARTED -> Triple(
             Color(0xFF4CAF50),
             Color.White,
-            "出發 DEPARTED"
-        )
-        FlightStatus.SCHEDULE_CHANGE -> Triple(
-            Color(0xFFFFA000),
-            Color.White,
-            "時間更改 SCHEDULE CHANGE"
+            "離站 DEPARTED"
         )
         FlightStatus.CANCELED -> Triple(
             Color(0xFFE53935),
             Color.White,
             "取消 CANCELED"
+        )
+        FlightStatus.ON_TIME -> Triple(
+            Color(0xFF2196F3),
+            Color.White,
+            "準時 ON TIME"
+        )
+        FlightStatus.ARRIVED -> Triple(
+            Color(0xFF673AB7),
+            Color.White,
+            "抵達 ARRIVED"
+        )
+        FlightStatus.DELAYED -> Triple(
+            Color(0xFFF57C00),
+            Color.White,
+            "延遲 DELAYED"
+        )
+        FlightStatus.SCHEDULE_CHANGE -> Triple(
+            Color(0xFFFFA000),
+            Color.White,
+            "時間更改 SCHEDULE CHANGE"
         )
     }
 

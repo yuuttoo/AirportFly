@@ -14,24 +14,8 @@ import com.example.airportfly.ui.Screen.Tab.FlightScheduleUiState
 import kotlinx.coroutines.delay
 
 @Composable
-fun FlyInfoOutScreen(
-    viewModel: FlightScheduleViewModel,
-    isVisible: Boolean
-) {
+fun FlyInfoOutScreen(viewModel: FlightScheduleViewModel) {
     val flyOutState by viewModel.flyOutScheduleState.collectAsState()
-
-    LaunchedEffect(isVisible) {
-        if(isVisible) {
-            viewModel.fetchOutboundFlights()
-
-            while(true) {
-                delay(Utility.REFRESH_INTERVAL)
-                if(isVisible) {
-                    viewModel.fetchOutboundFlights()
-                }
-            }
-        }
-    }
 
     when (val state = flyOutState) {
         is FlightScheduleUiState.Loading -> {
