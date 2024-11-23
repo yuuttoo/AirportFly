@@ -26,11 +26,11 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.airportfly.ui.Composable.BottomNavigationItems
 import com.example.airportfly.ui.NavigationGraph
-import com.example.airportfly.ui.Screen.FlightScheduleViewModel
+import com.example.airportfly.ui.Screen.Currency.CurrencyScreenViewModel
+import com.example.airportfly.ui.Screen.FlyInfo.FlightScheduleViewModel
 import com.example.airportfly.ui.theme.AirportFlyTheme
 
 class MainActivity : ComponentActivity() {
-    val vm = FlightScheduleViewModel()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -51,7 +51,8 @@ class MainActivity : ComponentActivity() {
                         NavigationGraph(
                             navController = navController,
                             startDestination = BottomNavigationItems.FlyInfoScreen.route,
-                            viewModel = FlightScheduleViewModel()
+                            flightScheduleViewModel = FlightScheduleViewModel(),
+                            currencyScreenViewModel = CurrencyScreenViewModel()
                         )
                     }
                 }

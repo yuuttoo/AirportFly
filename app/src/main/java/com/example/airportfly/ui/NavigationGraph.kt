@@ -5,24 +5,27 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.airportfly.ui.Composable.BottomNavigationItems
-import com.example.airportfly.ui.Screen.FlightScheduleViewModel
-import com.example.airportfly.ui.Screen.FlyInfoScreen
+import com.example.airportfly.ui.Screen.Currency.CurrencyScreen
+import com.example.airportfly.ui.Screen.Currency.CurrencyScreenViewModel
+import com.example.airportfly.ui.Screen.FlyInfo.FlightScheduleViewModel
+import com.example.airportfly.ui.Screen.FlyInfo.FlyInfoScreen
 
 @Composable
 fun NavigationGraph(
     navController: NavHostController,
     startDestination: String,
-    viewModel: FlightScheduleViewModel
+    flightScheduleViewModel: FlightScheduleViewModel,
+    currencyScreenViewModel: CurrencyScreenViewModel
 ) {
     NavHost(
         navController = navController,
         startDestination = startDestination
     ) {
         composable(BottomNavigationItems.FlyInfoScreen.route) {
-            FlyInfoScreen(viewModel)
+            FlyInfoScreen(flightScheduleViewModel)
         }
         composable(BottomNavigationItems.CurrencyScreen.route) {
-            CurrencyScreen()
+            CurrencyScreen(currencyScreenViewModel)
         }
     }
 }

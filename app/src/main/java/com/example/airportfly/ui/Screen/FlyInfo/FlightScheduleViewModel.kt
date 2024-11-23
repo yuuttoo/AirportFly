@@ -1,20 +1,17 @@
-package com.example.airportfly.ui.Screen
+package com.example.airportfly.ui.Screen.FlyInfo
 
 import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.airportfly.AirportFlyRepository
 import com.example.airportfly.BuildConfig
-import com.example.airportfly.FlightSchedule
 import com.example.airportfly.Utility
 import com.example.airportfly.kiaApiService
 import com.example.airportfly.model.FlightInfo
 import com.example.airportfly.model.FlightStatus
 import com.example.airportfly.network.CurrencyRepository
 import com.example.airportfly.network.currencyService
-import com.example.airportfly.ui.Screen.Tab.FlightScheduleUiState
+import com.example.airportfly.ui.Screen.FlyInfo.Tab.FlightScheduleUiState
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -24,7 +21,6 @@ import kotlinx.coroutines.launch
 
 class FlightScheduleViewModel: ViewModel() {
     val flyRepository = AirportFlyRepository(kiaApiService)
-    val curRepository = CurrencyRepository(currencyService)
 
     private val _flyInScheduleState = MutableStateFlow<FlightScheduleUiState>(FlightScheduleUiState.Loading)
     val flyInScheduleState: StateFlow<FlightScheduleUiState> = _flyInScheduleState.asStateFlow()
@@ -56,13 +52,12 @@ class FlightScheduleViewModel: ViewModel() {
     }
 
 
-    suspend fun fetchOutboundFlights() {
+    private suspend fun fetchOutboundFlights() {
             _flyInScheduleState.value = FlightScheduleUiState.Loading
             try {
                 flyRepository.fetchAirFlyData(airFlyLine = 1, airFlyIO = 1)
                     .collect { result ->
-                        result.onSuccess { it ->
-                            Log.e("flightSchedule Success:", it.toString())
+                        result.onSuccess {
                             _flyOutScheduleState.value = FlightScheduleUiState.Success(
                                 it.instantSchedule.map { flightSchedule ->
                                     FlightInfo(
@@ -96,8 +91,8 @@ class FlightScheduleViewModel: ViewModel() {
             try {
                 flyRepository.fetchAirFlyData(airFlyLine = 1, airFlyIO = 2)
                     .collect { result ->
-                        result.onSuccess { it ->
-                            Log.e("flightSchedule Success:", it.toString())
+                        result.onSuccess {
+                            //Log.e("flightSchedule Success:", it.toString())
                             _flyInScheduleState.value = FlightScheduleUiState.Success(
                                 it.instantSchedule.map { flightSchedule ->
                                     FlightInfo(
@@ -144,18 +139,5 @@ class FlightScheduleViewModel: ViewModel() {
         stopPolling()
     }
 
-    fun getRates() {
-        viewModelScope.launch {
-            curRepository.getExchangeRates(
-                apiKey = BuildConfig.CURRENCY_KEY,
-                currencies = "JPY,USD,CNY,EUR,AUD,KRW"
-            ).collect { result ->
-                result.onSuccess { data ->
-                    Log.e("Success:", data.toString())
-                }.onFailure { error ->
-                    Log.e("Error:", error.toString())
-                }
-            }
-        }
-    }
+
 }

@@ -1,4 +1,4 @@
-package com.example.airportfly.ui.Screen.Tab.FlyOutTab
+package com.example.airportfly.ui.Screen.FlyInfo.Tab.FlyOutTab
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -11,8 +11,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import com.example.airportfly.ui.Composable.FlightList
-import com.example.airportfly.ui.Screen.FlightScheduleViewModel
-import com.example.airportfly.ui.Screen.Tab.FlightScheduleUiState
+import com.example.airportfly.ui.Screen.FlyInfo.FlightScheduleViewModel
+import com.example.airportfly.ui.Screen.FlyInfo.Tab.FlightScheduleUiState
 
 @Composable
 fun FlyInfoOutScreen(viewModel: FlightScheduleViewModel) {

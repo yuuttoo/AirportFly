@@ -1,6 +1,5 @@
 package com.example.airportfly.network
 
-import com.example.airportfly.ApiService
 import com.example.airportfly.BuildConfig
 import com.example.airportfly.model.CurrencyResponse
 import retrofit2.Retrofit

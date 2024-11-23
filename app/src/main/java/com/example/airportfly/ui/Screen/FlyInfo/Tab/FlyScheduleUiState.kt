@@ -1,4 +1,4 @@
-package com.example.airportfly.ui.Screen.Tab
+package com.example.airportfly.ui.Screen.FlyInfo.Tab
 
 import com.example.airportfly.model.FlightInfo
 

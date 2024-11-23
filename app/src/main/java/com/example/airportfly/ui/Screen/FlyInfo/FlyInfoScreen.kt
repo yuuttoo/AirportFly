@@ -1,4 +1,4 @@
-package com.example.airportfly.ui.Screen
+package com.example.airportfly.ui.Screen.FlyInfo
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -21,9 +21,9 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
-import com.example.airportfly.ui.Screen.Tab.FlyInTab.FlyInfoInScreen
+import com.example.airportfly.ui.Screen.FlyInfo.Tab.FlyInTab.FlyInfoInScreen
 import com.example.airportfly.ui.FlyInfoTabItems
-import com.example.airportfly.ui.Screen.Tab.FlyOutTab.FlyInfoOutScreen
+import com.example.airportfly.ui.Screen.FlyInfo.Tab.FlyOutTab.FlyInfoOutScreen
 import kotlinx.coroutines.launch
 
 
