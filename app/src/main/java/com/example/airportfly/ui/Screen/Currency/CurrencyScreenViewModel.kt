@@ -20,7 +20,6 @@ class CurrencyScreenViewModel: ViewModel() {
     fun getRates() {
         viewModelScope.launch {
             _uiState.update { it.copy(isLoading = true) }
-
             curRepository.getExchangeRates(
                 apiKey = BuildConfig.CURRENCY_KEY,
                 currencies = "JPY,USD,CNY,EUR,AUD,KRW"
