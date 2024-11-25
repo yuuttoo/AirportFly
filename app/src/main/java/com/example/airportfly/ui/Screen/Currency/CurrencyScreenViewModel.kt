@@ -1,6 +1,5 @@
 package com.example.airportfly.ui.Screen.Currency
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.airportfly.BuildConfig
