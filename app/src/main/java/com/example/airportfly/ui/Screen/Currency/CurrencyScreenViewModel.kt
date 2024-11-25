@@ -18,10 +18,6 @@ class CurrencyScreenViewModel: ViewModel() {
     private val _uiState = MutableStateFlow(CurrencyUiState())
     val uiState: StateFlow<CurrencyUiState> = _uiState.asStateFlow()
 
-    init {
-        getRates()
-    }
-
     fun getRates() {
         viewModelScope.launch {
             _uiState.update { it.copy(isLoading = true) }

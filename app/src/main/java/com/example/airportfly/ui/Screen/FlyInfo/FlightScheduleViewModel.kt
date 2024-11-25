@@ -1,16 +1,12 @@
 package com.example.airportfly.ui.Screen.FlyInfo
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.airportfly.AirportFlyRepository
-import com.example.airportfly.BuildConfig
 import com.example.airportfly.Utility
 import com.example.airportfly.kiaApiService
 import com.example.airportfly.model.FlightInfo
 import com.example.airportfly.model.FlightStatus
-import com.example.airportfly.network.CurrencyRepository
-import com.example.airportfly.network.currencyService
 import com.example.airportfly.ui.Screen.FlyInfo.Tab.FlightScheduleUiState
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay

@@ -1,8 +1,5 @@
 package com.example.airportfly.ui
 
-import androidx.compose.material.icons.Icons
-import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.res.vectorResource
 import com.example.airportfly.R
 
 enum class FlyInfoTabItems (
